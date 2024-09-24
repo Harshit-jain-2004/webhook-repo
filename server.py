@@ -94,7 +94,7 @@ def get_events():
         from_branch = event["from_branch"]
         to_branch = event["to_branch"]
         timestamp = event["timestamp"].strftime("%d %b %Y - %I:%M %p UTC")
-
+        formatted_event=''
         if action == "push":
             formatted_event = f"{author} pushed to {to_branch} on {timestamp}"
         elif action == "pull_request":
@@ -106,7 +106,6 @@ def get_events():
 
         formatted_events.append(formatted_event)
     return json_util.dumps(formatted_events), 200
-    #return jsonify(events), 200
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
