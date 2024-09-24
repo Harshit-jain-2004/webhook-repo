@@ -49,7 +49,8 @@ def handle_webhook():
     if not data:
         return jsonify({"error": "No data received"}), 400
     event_type = request.headers.get('X-GitHub-Event')
-
+    if event_type == "closed" and data.get('pull_request', {}).get('merged', False):
+        event_type = "merge"
     if event_type == "push":
         event_data = {
             "action": event_type,
@@ -109,4 +110,3 @@ def get_events():
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
-# a comment
